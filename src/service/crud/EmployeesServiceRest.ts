@@ -1,6 +1,5 @@
 import { Observable, Subscriber } from 'rxjs';
 import Employee from '../../model/Employee';
-import { AUTH_DATA_JWT } from '../auth/AuthServiceJwt';
 import EmployeesService from './EmployeesService';
 const POLLER_INTERVAL = 3000;
 class Cache {
@@ -29,15 +28,8 @@ function getResponseText(response: Response): string {
     }
     return res;
 }
-function getHeaders(): HeadersInit {
-    const res: HeadersInit = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(AUTH_DATA_JWT) || ''}`,
-    };
-    return res;
-}
 async function fetchRequest(url: string, options: RequestInit, empl?: Employee): Promise<Response> {
-    options.headers = getHeaders();
+   
     if (empl) {
         options.body = JSON.stringify(empl);
     }

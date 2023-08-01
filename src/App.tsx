@@ -13,8 +13,6 @@ import SortByPrice from './components/pages/SortByPrice';
 import { StatusType } from './model/StatusType';
 import CodeType from './model/CodeType';
 import { useDispatch } from 'react-redux';
-import { authActions } from './redux/slices/authSlice';
-import { authService } from './config/service-config';
 import { Alert, Snackbar } from '@mui/material';
 import { codeActions } from './redux/slices/codeSlice';
 import Generation from './components/pages/Generation';
@@ -38,10 +36,7 @@ const App: React.FC = () => {
             case CodeType.UNKNOWN:
                 res[1] = 'error';
                 break;
-            case CodeType.AUTH_ERROR:
-                res[1] = 'error';
-                dispatch(authActions.reset());
-                authService.logout();
+                          
         }
 
         return res;
