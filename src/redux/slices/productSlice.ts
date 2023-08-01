@@ -13,6 +13,12 @@ const productSlice = createSlice({
       localStorage.setItem('products', JSON.stringify(newState));
       return newState; 
     },
+    deleteProduct: (state, action: PayloadAction<number>) => {
+        const newState = state.filter(product => product.id !== action.payload);
+        localStorage.setItem('products', JSON.stringify(newState));
+        return newState;
+      },   
+
   },
 });
 

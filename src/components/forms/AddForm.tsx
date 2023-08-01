@@ -12,7 +12,7 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
     const [error, setError] = useState('');
 
     const [product, setProduct] = useState(
-        productUpdated || { id: '', name: '', category: '', price: '' },
+        productUpdated || { id: 0, name: '', category: '', price: '' },
     );
 
     const handleInputChange = (event: any) => {
@@ -28,7 +28,7 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
   
       setError('');
       submitFn(product, product.category);
-      setProduct({ id: '', name: '', category: '', price: '' });
+      setProduct({ id: 0, name: '', category: '', price: '' });
   };
 
     return (

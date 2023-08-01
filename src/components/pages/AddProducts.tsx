@@ -45,25 +45,31 @@ const AddProduct: React.FC = () => {
         setOpenModal(false);
     };
 
-    const handleAddCar = (car: Car) => {        
-            const newProduct = { ...productToAdd, ...car };
-            handleConfirmation();
-            setProductToAdd(newProduct);
-            setOpenModal(false);      
+    const handleAddCar = (car: Car) => {
+        if (productToAdd) {
+        const newProduct = { ...productToAdd, ...car, id: Number(productToAdd.id) };
+        handleConfirmation();
+        setProductToAdd(newProduct);
+        setOpenModal(false);
+        }
     };
 
-    const handleAddElectronics = (electronics: Electronics) => {        
-            const newProduct = { ...productToAdd, ...electronics };
-            handleConfirmation();
-            setProductToAdd(newProduct);
-            setOpenModal(false);
+    const handleAddElectronics = (electronics: Electronics) => {
+        if (productToAdd) {
+            const newProduct = { ...productToAdd, ...electronics, id: Number(productToAdd.id) };
+        handleConfirmation();
+        setProductToAdd(newProduct);
+        setOpenModal(false);
+        }
     };
 
-    const handleAddHousing = (housing: Housing) => {        
-            const newProduct = { ...productToAdd, ...housing };
-            handleConfirmation();
-            setProductToAdd(newProduct);
-            setOpenModal(false);
+    const handleAddHousing = (housing: Housing) => {
+        if (productToAdd) {
+            const newProduct = { ...productToAdd, ...housing, id: Number(productToAdd.id) };
+        handleConfirmation();
+        setProductToAdd(newProduct);
+        setOpenModal(false);
+        }
     };
 
     const renderForm = () => {
@@ -103,7 +109,7 @@ const AddProduct: React.FC = () => {
                 >
                     {renderForm()}
                 </Paper>
-            </Modal>           
+            </Modal>
             <Confirmation
                 confirmFn={handleAddProduct}
                 open={openConfirm}
