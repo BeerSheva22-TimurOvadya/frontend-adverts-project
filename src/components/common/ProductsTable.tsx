@@ -9,6 +9,7 @@ import { Electronics } from '../../model/Electronics';
 import { Housing } from '../../model/Housing';
 import { productActions } from '../../redux/slices/productSlice';
 import { useDispatch } from 'react-redux';
+import SnackbarAlert from './SnackbarAlert';
 
 type Product = Car | Electronics | Housing;
 
@@ -33,7 +34,8 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
   const [openModal, setOpenModal] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState<number | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
+  const [snackbar, setSnackbar] = useState<{key: number, message: string}>({ key: 0, message: '' });
 
   const handleView = (params: GridRowParams) => {
     const product = products.find((product: Product) => product.id === params.id);
@@ -56,10 +58,11 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
 
   const handleConfirmDelete = (confirmed: boolean) => {
     if (confirmed && productIdToDelete !== null) {
-      dispatch(productActions.deleteProduct(productIdToDelete)); 
+        dispatch(productActions.deleteProduct(productIdToDelete));
+        setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
     }
     setConfirmDelete(false);
-  };
+};
 
   
   const columnsCommon: GridColDef[] = [
@@ -117,6 +120,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
         title={'Confirm Deletion'}
         content={'Are you sure you want to delete this product?'}
       />
+      <SnackbarAlert key={snackbar.key} message={snackbar.message} severity="success" />
     </Box>
   );
 };

@@ -19,7 +19,7 @@ const AddProduct: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
 
     const dispatch = useDispatch();
-    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbar, setSnackbar] = useState<{key: number, message: string}>({ key: 0, message: '' });
     const [openModal, setOpenModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -30,8 +30,8 @@ const AddProduct: React.FC = () => {
     const handleAddProduct = (confirmed: boolean) => {
         if (confirmed && productToAdd) {
             dispatch(productActions.addProduct(productToAdd));
-            setProducts([...products, productToAdd]);
-            setSnackbarMessage('Product added successfully!');
+            setProducts([...products, productToAdd]);            
+            setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
         }
         setOpenConfirm(false);
     };
@@ -116,7 +116,7 @@ const AddProduct: React.FC = () => {
                 title={'Confirm Addition'}
                 content={'Are you sure you want to add this product?'}
             />
-            <SnackbarAlert message={snackbarMessage} severity="success" />
+             <SnackbarAlert key={snackbar.key} message={snackbar.message} severity="success" />
         </Box>
     );
 };
