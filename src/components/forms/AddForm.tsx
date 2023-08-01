@@ -4,9 +4,8 @@ import Product from '../../model/Product';
 import { Categories } from '../../model/Common';
 
 interface AddFormProps {
-    submitFn: (product: Product) => void;
-    productUpdated?: Product;
-    onConfirmation: () => void;
+  submitFn: (product: Product, category: string) => void;
+  productUpdated?: Product;
 }
 
 const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
@@ -22,15 +21,15 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
     };
 
     const handleSubmit = () => {
-        if (!product.id || !product.name || !product.category || !product.price) {
-            setError('Please fill in all fields');
-            return;
-        }
-
-        setError('');
-        submitFn(product);
-        setProduct({ id: '', name: '', category: '', price: '' });
-    };
+      if (!product.id || !product.name || !product.category || !product.price) {
+          setError('Please fill in all fields');
+          return;
+      }
+  
+      setError('');
+      submitFn(product, product.category);
+      setProduct({ id: '', name: '', category: '', price: '' });
+  };
 
     return (
         <form

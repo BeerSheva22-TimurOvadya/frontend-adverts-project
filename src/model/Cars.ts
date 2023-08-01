@@ -5,4 +5,5 @@ export interface Car extends BaseProduct {
   brand: string;
   releaseYear: number;
   mileage: number;
+  enginePower: number;
 }

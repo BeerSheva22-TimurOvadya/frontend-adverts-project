@@ -4,6 +4,6 @@ export interface Housing extends BaseProduct {
   category: 'Housing';
   address: string;
   rooms: number;
-  squareFootage: number;
+  squareMeters: number;
   type: typeof HousingTypes[number];
 }

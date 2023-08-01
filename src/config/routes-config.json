@@ -3,7 +3,7 @@
         { "to": "/", "label": "All Products" },        
         { "to": "/products/categories", "label": "Categories" },
         { "to": "/products/price", "label": "Price" }, 
-        { "to": "/products/add", "label": "Add Products" },
-        { "to": "/generation", "label": "Generate Employees"}
+        { "to": "/products/add", "label": "Add Products" }
+        
     ]    
 }

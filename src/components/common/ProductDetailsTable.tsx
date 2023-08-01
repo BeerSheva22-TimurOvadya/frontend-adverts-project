@@ -21,6 +21,7 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
                             <TableCell>Brand</TableCell>
                             <TableCell>Release Year</TableCell>
                             <TableCell>Mileage</TableCell>
+                            <TableCell>Engine Power</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -28,48 +29,53 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
                             <TableCell>{product.brand}</TableCell>
                             <TableCell>{product.releaseYear}</TableCell>
                             <TableCell>{product.mileage}</TableCell>
+                            <TableCell>{product.enginePower}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             );
-            case 'Housing':
-                return (
-                  <Table>
+        case 'Housing':
+            return (
+                <Table>
                     <TableHead>
-                      <TableRow>
-                        <TableCell>Address</TableCell>
-                        <TableCell>Rooms</TableCell>
-                        <TableCell>Square Footage</TableCell>
-                      </TableRow>
+                        <TableRow>
+                            <TableCell>Type</TableCell>
+                            <TableCell>Rooms</TableCell>
+                            <TableCell>Square Meters</TableCell>
+                            <TableCell>Address</TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow>
-                        <TableCell>{product.address}</TableCell>
-                        <TableCell>{product.rooms}</TableCell>
-                        <TableCell>{product.squareFootage}</TableCell>
-                      </TableRow>
+                        <TableRow>
+                            <TableCell>{product.type}</TableCell>
+                            <TableCell>{product.rooms}</TableCell>
+                            <TableCell>{product.squareMeters}</TableCell>
+                            <TableCell>{product.address}</TableCell>
+                        </TableRow>
                     </TableBody>
-                  </Table>
-                );
-                case 'Electronics':
-                    return (
-                      <Table>
-                        <TableHead>
-                          <TableRow>
+                </Table>
+            );
+        case 'Electronics':
+            return (
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Type</TableCell>
                             <TableCell>Brand</TableCell>
                             <TableCell>Model</TableCell>
-                            <TableCell>Specifications</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <TableRow>
+                            <TableCell>Screen Size</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>{product.type}</TableCell>
                             <TableCell>{product.brand}</TableCell>
                             <TableCell>{product.model}</TableCell>
-                            <TableCell>{product.specifications}</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    );
+                            <TableCell>{product.screenSize}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            );
         default:
             return null;
     }

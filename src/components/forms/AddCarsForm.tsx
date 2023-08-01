@@ -10,6 +10,7 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
     brand: '',
     releaseYear: '',
     mileage: '',
+    enginePower: '',
   });
 
   const handleInputChange = (event: any) => {
@@ -26,6 +27,7 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
       <TextField name="brand" label="Brand" value={car.brand} onChange={handleInputChange} />
       <TextField name="releaseYear" label="Release Year" value={car.releaseYear} onChange={handleInputChange} type="number" />
       <TextField name="mileage" label="Mileage" value={car.mileage} onChange={handleInputChange} type="number" />
+      <TextField name="enginePower" label="Engine Power" value={car.enginePower} onChange={handleInputChange} type="number" />
       <Button onClick={handleSubmit}>Submit</Button>
     </form>
   );

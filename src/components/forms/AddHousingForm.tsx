@@ -11,8 +11,9 @@ interface HousingFormProps {
 const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
   const [housing, setHousing] = useState({
     type: '',
+    rooms: '',
     squareMeters: '',
-    city: '',
+    address: '',
   });
 
   const handleInputChange = (event: any) => {
@@ -42,8 +43,9 @@ const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
           ))}
         </Select>
       </FormControl>
+      <TextField name="rooms" label="Rooms" value={housing.rooms} onChange={handleInputChange} type="number" />
       <TextField name="squareMeters" label="Square Meters" value={housing.squareMeters} onChange={handleInputChange} type="number" />
-      <TextField name="city" label="City" value={housing.city} onChange={handleInputChange} />
+      <TextField name="address" label="Address" value={housing.address} onChange={handleInputChange} />
       <Button onClick={handleSubmit}>Submit</Button>
     </form>
   );

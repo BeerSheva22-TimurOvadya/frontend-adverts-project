@@ -10,8 +10,8 @@ const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {
     const [electronics, setElectronics] = useState({
         type: '',
         screenSize: '',
-        releaseYear: '',
-        processor: '',
+        model: '',
+        brand: '',
     });
 
     const handleInputChange = (event: any) => {
@@ -40,26 +40,26 @@ const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {
                         </MenuItem>
                     ))}
                 </Select>
-            </FormControl>
+            </FormControl>            
+            <TextField
+                name="brand"
+                label="Brand"
+                value={electronics.brand}
+                onChange={handleInputChange}
+                type="string"
+            />
+            <TextField
+                name="model"
+                label="Model"
+                value={electronics.model}
+                onChange={handleInputChange}
+            />
             <TextField
                 name="screenSize"
                 label="Screen Size (inches)"
                 value={electronics.screenSize}
                 onChange={handleInputChange}
                 type="number"
-            />
-            <TextField
-                name="releaseYear"
-                label="Release Year"
-                value={electronics.releaseYear}
-                onChange={handleInputChange}
-                type="number"
-            />
-            <TextField
-                name="processor"
-                label="Processor"
-                value={electronics.processor}
-                onChange={handleInputChange}
             />
             <Button onClick={handleSubmit}>Submit</Button>
         </form>
