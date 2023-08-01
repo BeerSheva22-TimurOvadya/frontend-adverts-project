@@ -11,7 +11,7 @@ const productSlice = createSlice({
     addProduct: (state, action: PayloadAction<Product>) => {
       const newState = [...state, action.payload];
       localStorage.setItem('products', JSON.stringify(newState));
-      return newState; // Возвращает новое состояние вместо мутации текущего
+      return newState; 
     },
   },
 });
