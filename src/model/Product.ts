@@ -1,8 +1,7 @@
-interface Product {
+type Product = {
     id: string;
     name: string;
     category: string;
     price: string;
-  }
-  
-  export default Product;
+}
+export default Product;

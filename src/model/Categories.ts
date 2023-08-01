@@ -1,1 +1,0 @@
-export const Categories = ['Electronics', 'Housing', 'Cars'] as const;

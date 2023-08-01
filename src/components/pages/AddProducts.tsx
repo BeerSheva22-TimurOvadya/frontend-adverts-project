@@ -13,6 +13,7 @@ const AddProduct: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const dispatch = useDispatch();
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    
 
     const handleConfirmation = () => {
         setOpenConfirm(true);

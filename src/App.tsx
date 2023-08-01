@@ -15,8 +15,7 @@ import Generation from './components/pages/Generation';
 const { always } = routesConfig;
 
 const App: React.FC = () => { 
-
-   
+     
     return (
         <BrowserRouter>
             <Routes>
