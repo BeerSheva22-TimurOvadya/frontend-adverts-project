@@ -1,15 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 
-import { codeReducer } from './slices/codeSlice';
-import CodePayload from '../model/CodePayload';
+import { productReducer } from './slices/productSlice';
 
 export const store = configureStore({
-    reducer: {       
-        codeState: codeReducer,
+    reducer: { 
+        products: productReducer,
+        
     },
 });
 
-export function useSelectorCode() {
-    return useSelector<any, CodePayload>((state) => state.codeState.codeMessage);
-}

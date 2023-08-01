@@ -1,45 +1,25 @@
-import React from 'react';
-import {
-    Button,
-    Box,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-type Props = {
-    title: string;
-    content: string;
-    confirmFn: (isOk: boolean) => void;
-    open: boolean;
+interface ConfirmationProps {
+  confirmFn: (isOk: boolean) => void;
+  open: boolean;
+  title: string;
+  content: string;
+}
+
+const Confirmation: React.FC<ConfirmationProps> = ({ confirmFn, open, title, content }) => {
+  return (
+    <Dialog open={open}>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{content}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => confirmFn(true)} color="primary">Yes</Button>
+        <Button onClick={() => confirmFn(false)} color="secondary">No</Button>
+      </DialogActions>
+    </Dialog>
+  );
 };
 
-export const Confirmation: React.FC<Props> = ({ title, confirmFn, content, open }) => {
-    const handleClose = (isOk: boolean) => {
-        confirmFn(isOk);
-    };
-
-    return (
-        <Box>
-            <Dialog
-                open={open}
-                onClose={() => handleClose(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">{content}</DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => handleClose(false)}>Cancel</Button>
-                    <Button onClick={() => handleClose(true)} autoFocus>
-                        OK
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </Box>
-    );
-};
+export default Confirmation;
