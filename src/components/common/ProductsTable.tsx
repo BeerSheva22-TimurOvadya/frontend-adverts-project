@@ -17,7 +17,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 800,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -57,7 +57,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
 
   const handleConfirmDelete = (confirmed: boolean) => {
     if (confirmed && productIdToDelete !== null) {
-        dispatch(productActions.deleteProduct(productIdToDelete));
+        // dispatch(productActions.deleteProduct(productIdToDelete));
         setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
     }
     setConfirmDelete(false);

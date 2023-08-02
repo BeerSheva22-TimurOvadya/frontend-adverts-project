@@ -1,6 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import Product from '../../model/Product';
-
 
 interface ProductDetailsTableProps {
     product: Product;
@@ -10,73 +9,47 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
     if (!product) return null;
 
     const additionalFields = JSON.parse(product.additionalFields);
+
+    let columns = [];
+    let rows = [];
+
     switch (product.category) {
         case 'Cars':
-            return (
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Brand</TableCell>
-                            <TableCell>Release Year</TableCell>
-                            <TableCell>Mileage</TableCell>
-                            <TableCell>Engine Power</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>{additionalFields.brand}</TableCell>
-                            <TableCell>{additionalFields.releaseYear}</TableCell>
-                            <TableCell>{additionalFields.mileage}</TableCell>
-                            <TableCell>{additionalFields.enginePower}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            );
+            columns = [
+                { field: 'brand', headerName: 'Brand', width: 130},
+                { field: 'releaseYear', headerName: 'Release Year', width: 130 },
+                { field: 'mileage', headerName: 'Mileage', width: 130 },
+                { field: 'enginePower', headerName: 'Engine Power', width: 130 },
+            ];
+            rows = [{ id: 1, ...additionalFields }];
+            break;
         case 'Housing':
-            return (
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Rooms</TableCell>
-                            <TableCell>Square Meters</TableCell>
-                            <TableCell>Address</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>{additionalFields.type}</TableCell>
-                            <TableCell>{additionalFields.rooms}</TableCell>
-                            <TableCell>{additionalFields.squareMeters}</TableCell>
-                            <TableCell>{additionalFields.address}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            );
+            columns = [
+                { field: 'type', headerName: 'Type', width: 130 },
+                { field: 'rooms', headerName: 'Rooms', width: 130 },
+                { field: 'squareMeters', headerName: 'Square Meters', width: 130 },
+                { field: 'address', headerName: 'Address', width: 130 },
+            ];
+            rows = [{ id: 1, ...additionalFields }];
+            break;
         case 'Electronics':
-            return (
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Brand</TableCell>
-                            <TableCell>Model</TableCell>
-                            <TableCell>Screen Size</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>{additionalFields.type}</TableCell>
-                            <TableCell>{additionalFields.brand}</TableCell>
-                            <TableCell>{additionalFields.model}</TableCell>
-                            <TableCell>{additionalFields.screenSize}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            );
+            columns = [
+                { field: 'type', headerName: 'Type', width: 130 },
+                { field: 'brand', headerName: 'Brand', width: 130 },
+                { field: 'model', headerName: 'Model', width: 130 },
+                { field: 'screenSize', headerName: 'Screen Size', width: 130 },
+            ];
+            rows = [{ id: 1, ...additionalFields }];
+            break;
         default:
             return null;
     }
+
+    return (
+        <div style={{ height: 300, width: 800 }}>
+            <DataGrid rows={rows} columns={columns} />
+        </div>
+    );
 };
 
 export default ProductDetailsTable;

@@ -1,27 +1,14 @@
-import Product from "../model/Product";
+import { Observable } from 'rxjs';
+import Product from '../model/Product';
 
-class ProductService {
-    private subscribers: Function[] = [];
-  
-    public subscribe(subscriber: Function) {
-      this.subscribers.push(subscriber);
-    }
-  
-    public unsubscribe(subscriber: Function) {
-      const index = this.subscribers.indexOf(subscriber);
-      if (index > -1) {
-        this.subscribers.splice(index, 1);
-      }
-    }
-  
-    public notify(data: any) {
-      this.subscribers.forEach(subscriber => subscriber(data));
-    }
-  
-    public addProduct(product: Product) {
-      // добавление продукта
-      // ...
-      this.notify(product); // уведомить всех подписчиков
-    }
-  }
-  
+export const fetchProducts = (): Observable<Product[]> => {
+  return new Observable((subscriber) => {
+    fetch('http://localhost:8080/products')
+      .then((response) => response.json())
+      .then((products) => {
+        subscriber.next(products);
+        subscriber.complete();
+      })
+      .catch((error) => subscriber.error(error));
+  });
+};

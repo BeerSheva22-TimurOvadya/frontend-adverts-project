@@ -26,7 +26,7 @@ const AddProduct: React.FC = () => {
 
     const handleAddProduct = (confirmed: boolean) => {
         if (confirmed && productToAdd) {
-            dispatch(productActions.addProduct(productToAdd));
+            // dispatch(productActions.addProduct(productToAdd));
             setProducts([...products, productToAdd]);
             setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
         }
