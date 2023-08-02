@@ -16,7 +16,14 @@ const productSlice = createSlice({
     },
     setProducts: (state, action: PayloadAction<Product[]>) => {
       return action.payload;
-    }
+    }, 
+    updateProduct: (state, action: PayloadAction<Product>) => {
+      const index = state.findIndex(product => product.id === action.payload.id);
+      if (index > -1) {
+        state[index] = action.payload;
+      }
+    },
+    
   },
 });
 

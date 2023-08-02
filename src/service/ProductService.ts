@@ -40,3 +40,13 @@ export const getProductsByPrice = async (maxPrice: number): Promise<Product[]> =
   return await response.json();
 };
 
+export const editProduct = async (productId: number, product: Product): Promise<Product> => {
+  const response = await fetch(`http://localhost:8080/products/${productId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(product),
+  });
+  return await response.json();
+};

@@ -12,7 +12,7 @@ interface AddFormProps {
 const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
     const [error, setError] = useState('');
     const [product, setProduct] = useState(
-        productUpdated || { name: '', category: '', price: '' },
+        productUpdated || { name: '', category: '', price: 0 },
     );
 
     const handleInputChange = (event: any) => {
@@ -28,7 +28,7 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
   
       setError('');
       submitFn(product, product.category);
-      setProduct({  name: '', category: '', price: '' });
+      setProduct({  name: '', category: '', price: 0 });
   };
 
     return (
