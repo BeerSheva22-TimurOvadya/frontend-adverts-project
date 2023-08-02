@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { Visibility, Delete } from '@mui/icons-material';
 import Confirmation from './Confirmation';
 import ProductDetailsTable from './ProductDetailsTable';
-
-import { productActions } from '../../redux/slices/productSlice';
-import { useDispatch } from 'react-redux';
 import SnackbarAlert from './SnackbarAlert';
 import Product from '../../model/Product';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../service/ProductService';
+import { productActions } from '../../redux/slices/productSlice';
 
 
 
@@ -25,16 +25,17 @@ const style = {
 };
 
 type ProductsTableProps = {
-  products: Product[];  
+  products: Product[]; 
+  onDelete?: () => void;   
 };
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
+const ProductsTable: React.FC<ProductsTableProps> = ({ products,  onDelete }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [productIdToDelete, setProductIdToDelete] = useState<number | null>(null);
-  const dispatch = useDispatch();  
+  const [productIdToDelete, setProductIdToDelete] = useState<number | null>(null);  
   const [snackbar, setSnackbar] = useState<{key: number, message: string}>({ key: 0, message: '' });
+  const dispatch = useDispatch();
 
   const handleView = (params: GridRowParams) => {
     const product = products.find((product: Product) => product.id === params.id);
@@ -43,8 +44,6 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
       setOpenModal(true);
     }
   };
-
-  
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -55,13 +54,21 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     setConfirmDelete(true);
   };
 
-  const handleConfirmDelete = (confirmed: boolean) => {
+  const handleConfirmDelete = async (confirmed: boolean) => {
     if (confirmed && productIdToDelete !== null) {
-        // dispatch(productActions.deleteProduct(productIdToDelete));
+      try {
+        await deleteProduct(productIdToDelete);
+        dispatch(productActions.deleteProduct(productIdToDelete));
         setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
+        if (onDelete) {
+          onDelete(); 
+        }
+      } catch (error) {
+        setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete product!' });
+      }
     }
     setConfirmDelete(false);
-};
+  };
 
   
   const columnsCommon: GridColDef[] = [

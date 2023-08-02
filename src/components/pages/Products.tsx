@@ -8,6 +8,7 @@ import Product from '../../model/Product';
 
 const Products: React.FC = () => {  
   const [products, setProducts] = useState<Product[]>([]);
+  const [reload, setReload] = useState(false);
   const subscription = useRef<Subscription | null>(null); 
 
   useEffect(() => {
@@ -17,11 +18,15 @@ const Products: React.FC = () => {
     return () => {
       subscription.current?.unsubscribe(); 
     }
-  }, []);
+  }, [reload]);
+
+  const handleProductDelete = () => {
+    setReload(!reload);
+  }
 
   return (
     <Box>
-      <ProductsTable products={products} />
+      <ProductsTable products={products} onDelete={handleProductDelete} />
     </Box>
   );
 };

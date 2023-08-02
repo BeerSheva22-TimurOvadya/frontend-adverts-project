@@ -9,11 +9,12 @@ import AddCarsForm from '../forms/AddCarsForm';
 import AddElectronicsForm from '../forms/AddElectronicsForm';
 import AddHousingForm from '../forms/AddHousingForm';
 import { Box, Modal, Paper } from '@mui/material';
+import { addProduct } from '../../service/ProductService';
 
 const AddProduct: React.FC = () => {
     const [openConfirm, setOpenConfirm] = useState(false);
     const [productToAdd, setProductToAdd] = useState<Product>();
-    const [products, setProducts] = useState<Product[]>([]);
+    
 
     const dispatch = useDispatch();
     const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
@@ -26,12 +27,17 @@ const AddProduct: React.FC = () => {
 
     const handleAddProduct = (confirmed: boolean) => {
         if (confirmed && productToAdd) {
-            // dispatch(productActions.addProduct(productToAdd));
-            setProducts([...products, productToAdd]);
-            setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
+          addProduct(productToAdd)
+            .then((newProduct) => {
+              dispatch(productActions.addProduct(newProduct));
+              setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
+            })
+            .catch((error:any) => {              
+              console.error(error);
+            });
+          setOpenConfirm(false);
         }
-        setOpenConfirm(false);
-    };
+      };
 
     const handleCategorySelection = (product: Product, category: string) => {
         setProductToAdd(product);

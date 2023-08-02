@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Select, MenuItem } from '@mui/material';
 
 import ProductsTable from '../common/ProductsTable';
+import { getProductsByCategory } from '../../service/ProductService';
+import { productActions } from '../../redux/slices/productSlice';
+import Product from '../../model/Product';
 
 const SortByCategories: React.FC = () => {
-  
+  const dispatch = useDispatch();
   const products = useSelector((state: any) => state.products);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
- 
+  const [selectedCategory, setSelectedCategory] = useState<string>("Cars");
+
   const handleCategoryChange = (event: any) => {
     setSelectedCategory(event.target.value as string);
   };
 
-  const filteredProducts = selectedCategory
-    ? products.filter((product: any) => product.category === selectedCategory)
-    : products;
+  useEffect(() => {
+    
+      getProductsByCategory(selectedCategory)
+        .then((products: Product[]) => {
+          dispatch(productActions.setProducts(products));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  
+  }, [selectedCategory, dispatch]);
 
   return (
     <Box>
@@ -25,13 +36,13 @@ const SortByCategories: React.FC = () => {
           onChange={handleCategoryChange}
           displayEmpty
         >
-          <MenuItem value="">All Categories</MenuItem>
+          
           <MenuItem value="Cars">Cars</MenuItem>
           <MenuItem value="Electronics">Electronics</MenuItem>
           <MenuItem value="Housing">Housing</MenuItem>
         </Select>
       </Box>
-      <ProductsTable products={filteredProducts}  />
+      <ProductsTable products={products} />
     </Box>
   );
 };
