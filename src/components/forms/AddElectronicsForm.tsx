@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import {ElectronicsTypes} from '../../model/Common'
+import{ElectronicsTypes} from '../../model/AllCategories'
 
 interface ElectronicsFormProps {
-    submitFn: (electronics: any) => void;
+    submitFn: (electronics: any) => void;    
     }
 
 const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {

@@ -26,7 +26,7 @@ const SortByCategories: React.FC = () => {
           displayEmpty
         >
           <MenuItem value="">All Categories</MenuItem>
-          <MenuItem value="Car">Car</MenuItem>
+          <MenuItem value="Cars">Cars</MenuItem>
           <MenuItem value="Electronics">Electronics</MenuItem>
           <MenuItem value="Housing">Housing</MenuItem>
         </Select>

@@ -1,9 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { Car } from '../../model/Cars';
-import { Electronics } from '../../model/Electronics';
-import { Housing } from '../../model/Housing';
+import Product from '../../model/Product';
 
-type Product = Car | Electronics | Housing;
 
 interface ProductDetailsTableProps {
     product: Product;
@@ -12,6 +9,7 @@ interface ProductDetailsTableProps {
 const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) => {
     if (!product) return null;
 
+    const additionalFields = JSON.parse(product.additionalFields);
     switch (product.category) {
         case 'Cars':
             return (
@@ -26,10 +24,10 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell>{product.brand}</TableCell>
-                            <TableCell>{product.releaseYear}</TableCell>
-                            <TableCell>{product.mileage}</TableCell>
-                            <TableCell>{product.enginePower}</TableCell>
+                            <TableCell>{additionalFields.brand}</TableCell>
+                            <TableCell>{additionalFields.releaseYear}</TableCell>
+                            <TableCell>{additionalFields.mileage}</TableCell>
+                            <TableCell>{additionalFields.enginePower}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -47,10 +45,10 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell>{product.type}</TableCell>
-                            <TableCell>{product.rooms}</TableCell>
-                            <TableCell>{product.squareMeters}</TableCell>
-                            <TableCell>{product.address}</TableCell>
+                            <TableCell>{additionalFields.type}</TableCell>
+                            <TableCell>{additionalFields.rooms}</TableCell>
+                            <TableCell>{additionalFields.squareMeters}</TableCell>
+                            <TableCell>{additionalFields.address}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -68,10 +66,10 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell>{product.type}</TableCell>
-                            <TableCell>{product.brand}</TableCell>
-                            <TableCell>{product.model}</TableCell>
-                            <TableCell>{product.screenSize}</TableCell>
+                            <TableCell>{additionalFields.type}</TableCell>
+                            <TableCell>{additionalFields.brand}</TableCell>
+                            <TableCell>{additionalFields.model}</TableCell>
+                            <TableCell>{additionalFields.screenSize}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

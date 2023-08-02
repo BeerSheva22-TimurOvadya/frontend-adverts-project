@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { HousingTypes } from '../../model/Common';
+import{HousingTypes} from '../../model/AllCategories'
+
 
 interface HousingFormProps {
   submitFn: (housing: any) => void;

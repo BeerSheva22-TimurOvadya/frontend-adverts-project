@@ -8,9 +8,6 @@ import { productActions } from '../../redux/slices/productSlice';
 import AddCarsForm from '../forms/AddCarsForm';
 import AddElectronicsForm from '../forms/AddElectronicsForm';
 import AddHousingForm from '../forms/AddHousingForm';
-import { Car } from '../../model/Cars';
-import { Electronics } from '../../model/Electronics';
-import { Housing } from '../../model/Housing';
 import { Box, Modal, Paper } from '@mui/material';
 
 const AddProduct: React.FC = () => {
@@ -19,7 +16,7 @@ const AddProduct: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
 
     const dispatch = useDispatch();
-    const [snackbar, setSnackbar] = useState<{key: number, message: string}>({ key: 0, message: '' });
+    const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
     const [openModal, setOpenModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -30,7 +27,7 @@ const AddProduct: React.FC = () => {
     const handleAddProduct = (confirmed: boolean) => {
         if (confirmed && productToAdd) {
             dispatch(productActions.addProduct(productToAdd));
-            setProducts([...products, productToAdd]);            
+            setProducts([...products, productToAdd]);
             setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
         }
         setOpenConfirm(false);
@@ -45,30 +42,48 @@ const AddProduct: React.FC = () => {
         setOpenModal(false);
     };
 
-    const handleAddCar = (car: Car) => {
+    const handleAddCar = (car: any) => {
         if (productToAdd) {
-        const newProduct = { ...productToAdd, ...car, id: Number(productToAdd.id) };
-        handleConfirmation();
-        setProductToAdd(newProduct);
-        setOpenModal(false);
+            const additionalFields = JSON.stringify({
+                brand: car.brand,
+                releaseYear: car.releaseYear,
+                mileage: car.mileage,
+                enginePower: car.enginePower,
+            });
+            const newProduct = { ...productToAdd, additionalFields, id: Number(productToAdd.id) };
+            handleConfirmation();
+            setProductToAdd(newProduct);
+            setOpenModal(false);
         }
     };
 
-    const handleAddElectronics = (electronics: Electronics) => {
+    const handleAddElectronics = (electronics: any) => {
         if (productToAdd) {
-            const newProduct = { ...productToAdd, ...electronics, id: Number(productToAdd.id) };
-        handleConfirmation();
-        setProductToAdd(newProduct);
-        setOpenModal(false);
+            const additionalFields = JSON.stringify({
+                brand: electronics.brand,
+                model: electronics.model,
+                screenSize: electronics.screenSize,
+                type: electronics.type,
+            });
+            const newProduct = { ...productToAdd, additionalFields, id: Number(productToAdd.id) };
+            handleConfirmation();
+            setProductToAdd(newProduct);
+            setOpenModal(false);
         }
     };
 
-    const handleAddHousing = (housing: Housing) => {
+    const handleAddHousing = (housing: any) => {
         if (productToAdd) {
-            const newProduct = { ...productToAdd, ...housing, id: Number(productToAdd.id) };
-        handleConfirmation();
-        setProductToAdd(newProduct);
-        setOpenModal(false);
+            const additionalFields = JSON.stringify({
+                address: housing.address,
+                rooms: housing.rooms,
+                squareMeters: housing.squareMeters,
+                type: housing.type,
+            });
+            const newProduct = { ...productToAdd, additionalFields, id: Number(productToAdd.id) };
+            handleConfirmation();
+            setProductToAdd(newProduct);
+            setOpenModal(false);
         }
     };
 
@@ -116,7 +131,7 @@ const AddProduct: React.FC = () => {
                 title={'Confirm Addition'}
                 content={'Are you sure you want to add this product?'}
             />
-             <SnackbarAlert key={snackbar.key} message={snackbar.message} severity="success" />
+            <SnackbarAlert key={snackbar.key} message={snackbar.message} severity="success" />
         </Box>
     );
 };

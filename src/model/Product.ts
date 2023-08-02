@@ -3,5 +3,6 @@ type Product = {
     name: string;
     category: string;
     price: string;
-}
-export default Product;
+    additionalFields?: any; 
+  }
+  export default Product;

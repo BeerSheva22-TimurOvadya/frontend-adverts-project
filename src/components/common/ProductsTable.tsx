@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { Visibility, Delete } from '@mui/icons-material';
 import Confirmation from './Confirmation';
 import ProductDetailsTable from './ProductDetailsTable';
-import { Car } from '../../model/Cars';
-import { Electronics } from '../../model/Electronics';
-import { Housing } from '../../model/Housing';
+
 import { productActions } from '../../redux/slices/productSlice';
 import { useDispatch } from 'react-redux';
 import SnackbarAlert from './SnackbarAlert';
+import Product from '../../model/Product';
 
-type Product = Car | Electronics | Housing;
+
 
 const style = {
   position: 'absolute' as 'absolute',

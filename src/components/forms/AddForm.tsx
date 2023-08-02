@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Product from '../../model/Product';
-import { Categories } from '../../model/Common';
+import { Categories } from '../../model/AllCategories';
+
 
 interface AddFormProps {
   submitFn: (product: Product, category: string) => void;
