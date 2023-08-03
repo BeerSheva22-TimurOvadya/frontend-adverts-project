@@ -1,9 +1,11 @@
 import { Observable } from 'rxjs';
 import Product from '../model/Product';
 
+const URL = 'http://localhost:8080/products';
+
 export const fetchProducts = (): Observable<Product[]> => {
   return new Observable((subscriber) => {
-    fetch('http://localhost:8080/products')
+    fetch(URL)
       .then((response) => response.json())
       .then((products) => {
         subscriber.next(products);
@@ -14,7 +16,7 @@ export const fetchProducts = (): Observable<Product[]> => {
 };
 
 export const addProduct = async (product: Product): Promise<Product> => {
-  const response = await fetch('http://localhost:8080/products', {
+  const response = await fetch(URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,23 +27,23 @@ export const addProduct = async (product: Product): Promise<Product> => {
 };
 
 export const deleteProduct = async (productId: number): Promise<void> => {
-  await fetch(`http://localhost:8080/products/${productId}`, {
+  await fetch(`${URL}/${productId}`, {
     method: 'DELETE',
   });
 };
 
 export const getProductsByCategory = async (category: string): Promise<Product[]> => {
-  const response = await fetch(`http://localhost:8080/products/category/${category}`);
+  const response = await fetch(`${URL}/category/${category}`);
   return await response.json();
 };
 
 export const getProductsByPrice = async (maxPrice: number): Promise<Product[]> => {
-  const response = await fetch(`http://localhost:8080/products/price?maxPrice=${maxPrice}`);
+  const response = await fetch(`${URL}/price?maxPrice=${maxPrice}`);
   return await response.json();
 };
 
 export const editProduct = async (productId: number, product: Product): Promise<Product> => {
-  const response = await fetch(`http://localhost:8080/products/${productId}`, {
+  const response = await fetch(`${URL}/${productId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
