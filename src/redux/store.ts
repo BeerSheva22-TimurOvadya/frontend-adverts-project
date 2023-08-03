@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { productReducer } from './slices/productSlice';
+import { advertReducer } from './slices/advertSlice';
 
 export const store = configureStore({
     reducer: { 
-        products: productReducer,        
+        advert: advertReducer,        
     },
 });
 

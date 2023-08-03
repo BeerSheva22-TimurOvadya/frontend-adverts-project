@@ -1,35 +1,32 @@
 import { useState } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import Product from '../../model/Product';
+import Advert from '../../model/Advert';
 import { Categories } from '../../model/AllCategories';
 
-
 interface AddFormProps {
-  submitFn: (product: Product, category: string) => void;
-  productUpdated?: Product;
+    submitFn: (advert: Advert, category: string) => void;
+    advertUpdated?: Advert;
 }
 
-const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
+const AddForm: React.FC<AddFormProps> = ({ submitFn, advertUpdated }) => {
     const [error, setError] = useState('');
-    const [product, setProduct] = useState(
-        productUpdated || { name: '', category: '', price: 0 },
-    );
+    const [advert, setAdvert] = useState(advertUpdated || { name: '', category: '', price: 0 });
 
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
-        setProduct({ ...product, [name]: value });
+        setAdvert({ ...advert, [name]: value });
     };
 
     const handleSubmit = () => {
-      if ( !product.name || !product.category || !product.price) {
-          setError('Please fill in all fields');
-          return;
-      }
-  
-      setError('');
-      submitFn(product, product.category);
-      setProduct({  name: '', category: '', price: 0 });
-  };
+        if (!advert.name || !advert.category || !advert.price) {
+            setError('Please fill in all fields');
+            return;
+        }
+
+        setError('');
+        submitFn(advert, advert.category);
+        setAdvert({ name: '', category: '', price: 0 });
+    };
 
     return (
         <form
@@ -42,14 +39,14 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
                 top: '10%',
                 width: '100%',
             }}
-        >           
-            <TextField name="name" label="Name" value={product.name} onChange={handleInputChange} />
+        >
+            <TextField name="name" label="Name" value={advert.name} onChange={handleInputChange} />
             <FormControl style={{ minWidth: '200px' }}>
                 <InputLabel id="category-label">Choose a Category</InputLabel>
                 <Select
                     labelId="category-label"
                     name="category"
-                    value={product.category}
+                    value={advert.category}
                     onChange={handleInputChange}
                     label="Choose a Category"
                 >
@@ -63,7 +60,7 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
             <TextField
                 name="price"
                 label="Price"
-                value={product.price}
+                value={advert.price}
                 onChange={handleInputChange}
                 type="number"
             />
