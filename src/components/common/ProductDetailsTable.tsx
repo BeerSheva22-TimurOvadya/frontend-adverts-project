@@ -16,28 +16,28 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
     switch (product.category) {
         case 'Cars':
             columns = [
-                { field: 'brand', headerName: 'Brand', width: 130},
-                { field: 'releaseYear', headerName: 'Release Year', width: 130 },
-                { field: 'mileage', headerName: 'Mileage', width: 130 },
-                { field: 'enginePower', headerName: 'Engine Power', width: 130 },
+                { field: 'brand', headerName: 'Brand', flex: 1 },
+                { field: 'releaseYear', headerName: 'Release Year', flex: 1 },
+                { field: 'mileage', headerName: 'Mileage', flex: 1 },
+                { field: 'enginePower', headerName: 'Engine Power', flex: 1 },
             ];
             rows = [{ id: 1, ...additionalFields }];
             break;
         case 'Housing':
             columns = [
-                { field: 'type', headerName: 'Type', width: 130 },
-                { field: 'rooms', headerName: 'Rooms', width: 130 },
-                { field: 'squareMeters', headerName: 'Square Meters', width: 130 },
-                { field: 'address', headerName: 'Address', width: 130 },
+                { field: 'type', headerName: 'Type', flex: 1 },
+                { field: 'rooms', headerName: 'Rooms', flex: 1 },
+                { field: 'squareMeters', headerName: 'Square Meters', flex: 1 },
+                { field: 'address', headerName: 'Address', flex: 1 },
             ];
             rows = [{ id: 1, ...additionalFields }];
             break;
         case 'Electronics':
             columns = [
-                { field: 'type', headerName: 'Type', width: 130 },
-                { field: 'brand', headerName: 'Brand', width: 130 },
-                { field: 'model', headerName: 'Model', width: 130 },
-                { field: 'screenSize', headerName: 'Screen Size', width: 130 },
+                { field: 'type', headerName: 'Type', flex: 1 },
+                { field: 'brand', headerName: 'Brand', flex: 1 },
+                { field: 'model', headerName: 'Model', flex: 1 },
+                { field: 'screenSize', headerName: 'Screen Size', flex: 1 },
             ];
             rows = [{ id: 1, ...additionalFields }];
             break;
@@ -46,7 +46,7 @@ const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) =>
     }
 
     return (
-        <div style={{ height: 300, width: 800 }}>
+        <div style={{ height: '100%', width: '100%' }}>
             <DataGrid rows={rows} columns={columns} />
         </div>
     );

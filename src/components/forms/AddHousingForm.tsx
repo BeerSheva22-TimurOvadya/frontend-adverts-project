@@ -7,8 +7,6 @@ interface HousingFormProps {
   submitFn: (housing: any) => void;
 }
 
-
-
 const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
   const [housing, setHousing] = useState({
     type: '',
@@ -27,8 +25,16 @@ const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
   };
 
   return (
-    <form>
-      <FormControl style={{ minWidth: '200px' }}>
+    <form
+        style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            maxWidth: '400px',
+            margin: '0 auto',
+        }}
+    >
+      <FormControl style={{ minWidth: '200px', marginBottom: '10px', width: '100%' }}>
         <InputLabel id="type-label">Housing Type</InputLabel>
         <Select
           labelId="type-label"
@@ -44,10 +50,10 @@ const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
           ))}
         </Select>
       </FormControl>
-      <TextField name="rooms" label="Rooms" value={housing.rooms} onChange={handleInputChange} type="number" />
-      <TextField name="squareMeters" label="Square Meters" value={housing.squareMeters} onChange={handleInputChange} type="number" />
-      <TextField name="address" label="Address" value={housing.address} onChange={handleInputChange} />
-      <Button onClick={handleSubmit}>Submit</Button>
+      <TextField name="rooms" label="Rooms" value={housing.rooms} onChange={handleInputChange} type="number" style={{ marginBottom: '10px', width: '100%' }} />
+      <TextField name="squareMeters" label="Square Meters" value={housing.squareMeters} onChange={handleInputChange} type="number" style={{ marginBottom: '10px', width: '100%' }} />
+      <TextField name="address" label="Address" value={housing.address} onChange={handleInputChange} style={{ marginBottom: '10px', width: '100%' }} />
+      <Button variant="contained" color="primary" onClick={handleSubmit}>Submit</Button>
     </form>
   );
 };

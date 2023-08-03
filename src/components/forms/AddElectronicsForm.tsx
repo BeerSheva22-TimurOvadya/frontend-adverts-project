@@ -24,8 +24,16 @@ const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {
     };
 
     return (
-        <form>
-            <FormControl style={{ minWidth: '200px' }}>
+        <form
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center', 
+                maxWidth: '400px', 
+                margin: '0 auto', 
+            }}
+        >
+            <FormControl style={{ minWidth: '200px', marginBottom: '10px', width: '100%' }}>
                 <InputLabel id="type-label">Type</InputLabel>
                 <Select
                     labelId="type-label"
@@ -33,6 +41,7 @@ const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {
                     value={electronics.type}
                     onChange={handleInputChange}
                     label="Type"
+                    
                 >
                     {ElectronicsTypes.map((type) => (
                         <MenuItem key={type} value={type}>
@@ -40,19 +49,21 @@ const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {
                         </MenuItem>
                     ))}
                 </Select>
-            </FormControl>            
+            </FormControl>
             <TextField
                 name="brand"
                 label="Brand"
                 value={electronics.brand}
                 onChange={handleInputChange}
                 type="string"
+                style={{ marginBottom: '10px', width: '100%' }} 
             />
             <TextField
                 name="model"
                 label="Model"
                 value={electronics.model}
                 onChange={handleInputChange}
+                style={{ marginBottom: '10px', width: '100%' }} 
             />
             <TextField
                 name="screenSize"
@@ -60,10 +71,18 @@ const ElectronicsForm: React.FC<ElectronicsFormProps> = ({ submitFn }) => {
                 value={electronics.screenSize}
                 onChange={handleInputChange}
                 type="number"
+                style={{ marginBottom: '10px', width: '100%' }} 
             />
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button
+                variant="contained"
+                color="primary" 
+                onClick={handleSubmit}
+            >
+                Submit
+            </Button>
         </form>
     );
+    
 };
 
 export default ElectronicsForm;

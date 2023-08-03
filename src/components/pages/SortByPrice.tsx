@@ -38,7 +38,19 @@ const SortByPrice: React.FC = () => {
                     onChange={handlePriceChange}
                     variant="outlined"
                 />
-                <Button onClick={handleApply}>Apply</Button>
+
+                <Button
+                    style={{
+                        backgroundColor: '#63a4ff',
+                        height: '56px',
+                        width: '100px',
+                        marginLeft: '1rem', 
+                    }}
+                    variant="contained"
+                    onClick={handleApply}
+                >
+                    Apply
+                </Button>
             </Box>
             <ProductsTable products={products} />
         </Box>

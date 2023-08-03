@@ -1,4 +1,4 @@
-import { Box, Modal } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, TextField } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { useState } from 'react';
 import { Visibility, Delete, Edit } from '@mui/icons-material';
@@ -149,31 +149,45 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
                 </Box>
             </Modal>
 
-            <Modal
-                open={editProductModal.product !== null}
-                onClose={() => setEditProductModal({ product: null, price: null })}
-                aria-labelledby="edit-product-modal-title"
-                aria-describedby="edit-product-modal-description"
-            >
-                <Box sx={style}>
-                    {editProductModal.product && (
-                        <div>
-                            <h2>Edit Price for {editProductModal.product.name}</h2>
-                            <input
-                                type="number"
-                                value={editProductModal.price || ''}
-                                onChange={(e) =>
-                                    setEditProductModal({
-                                        ...editProductModal,
-                                        price: parseFloat(e.target.value),
-                                    })
-                                }
-                            />
-                            <button onClick={handleConfirmEdit}>Confirm</button>
-                        </div>
-                    )}
-                </Box>
-            </Modal>
+            <Dialog
+          open={editProductModal.product !== null}
+          onClose={() => setEditProductModal({ product: null, price: null })}
+          aria-labelledby="edit-product-modal-title"
+          aria-describedby="edit-product-modal-description"
+      >
+          {editProductModal.product && (
+              <>
+                  <DialogTitle>Edit Price for {editProductModal.product.name}</DialogTitle>
+                  <DialogContent>
+                      <DialogContentText>
+                          Please enter the new price for the product.
+                      </DialogContentText>
+                      <TextField
+                          autoFocus
+                          margin="dense"
+                          label="Price"
+                          type="number"
+                          fullWidth
+                          value={editProductModal.price || ''}
+                          onChange={(e) =>
+                              setEditProductModal({
+                                  ...editProductModal,
+                                  price: parseFloat(e.target.value),
+                              })
+                          }
+                      />
+                  </DialogContent>
+                  <DialogActions>
+                      <Button onClick={() => setEditProductModal({ product: null, price: null })} color="primary">
+                          Cancel
+                      </Button>
+                      <Button onClick={handleConfirmEdit} color="primary">
+                          Confirm
+                      </Button>
+                  </DialogActions>
+              </>
+          )}
+      </Dialog>
 
             <Confirmation
                 confirmFn={handleConfirmDelete}
