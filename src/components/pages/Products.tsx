@@ -8,6 +8,8 @@ import Product from '../../model/Product';
 const Products: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]); 
     const subscription = useRef<Subscription | null>(null);
+    
+    
 
     useEffect(() => {
         subscription.current = productService.getAllProducts().subscribe((fetchedProducts: Product[]) => {

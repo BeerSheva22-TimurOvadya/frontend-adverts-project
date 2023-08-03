@@ -31,6 +31,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [productIdToDelete, setProductIdToDelete] = useState<number | null>(null);
     const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
+    
 
     const [editProductModal, setEditProductModal] = useState<{
         product: Product | null;
@@ -62,6 +63,8 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
             setEditProductModal({ product, price: product.price });
         }
     };
+
+    
 
     const handleConfirmEdit = async () => {
         if (
