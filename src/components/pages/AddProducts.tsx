@@ -3,8 +3,6 @@ import Confirmation from '../common/Confirmation';
 import AddForm from '../forms/AddForm';
 import SnackbarAlert from '../common/SnackbarAlert';
 import Product from '../../model/Product';
-import { useDispatch } from 'react-redux';
-import { productActions } from '../../redux/slices/productSlice';
 import AddCarsForm from '../forms/AddCarsForm';
 import AddElectronicsForm from '../forms/AddElectronicsForm';
 import AddHousingForm from '../forms/AddHousingForm';
@@ -15,7 +13,7 @@ const AddProduct: React.FC = () => {
     const [openConfirm, setOpenConfirm] = useState(false);
     const [productToAdd, setProductToAdd] = useState<Product>();
 
-    const dispatch = useDispatch();
+    
     const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
     const [openModal, setOpenModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -27,8 +25,7 @@ const AddProduct: React.FC = () => {
     const handleAddProduct = (confirmed: boolean) => {
         if (confirmed && productToAdd) {
             productService.addProduct(productToAdd)
-                .then((newProduct) => {
-                    dispatch(productActions.addProduct(newProduct));
+                .then(() => {                    
                     setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
                 })
                 .catch((error: any) => {

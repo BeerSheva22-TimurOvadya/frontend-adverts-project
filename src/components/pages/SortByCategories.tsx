@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Box, Select, MenuItem } from '@mui/material';
-
 import ProductsTable from '../common/ProductsTable';
 import { productService } from '../../config/service-config';
-import { productActions } from '../../redux/slices/productSlice';
 import Product from '../../model/Product';
 
 const SortByCategories: React.FC = () => {
-    const dispatch = useDispatch();
-    const products = useSelector((state: any) => state.products);
+    const [products, setProducts] = useState<Product[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>('Cars');
 
     const handleCategoryChange = (event: any) => {
@@ -19,12 +15,12 @@ const SortByCategories: React.FC = () => {
     useEffect(() => {
         productService.getProductsByCategory(selectedCategory)
             .then((products: Product[]) => {
-                dispatch(productActions.setProducts(products));
+                setProducts(products);
             })
             .catch((error) => {
                 console.error(error);
             });
-    }, [selectedCategory, dispatch]);
+    }, [selectedCategory]);
 
     return (
         <Box>

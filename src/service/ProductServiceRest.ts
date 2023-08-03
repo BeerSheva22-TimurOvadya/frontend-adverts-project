@@ -3,6 +3,7 @@ import Product from '../model/Product';
 import ProductService from './ProductService';
 
 
+
 const POLLER_INTERVAL = 5000;
 
 class Cache {
@@ -50,7 +51,7 @@ export default class ProductServiceRest implements ProductService {
 
     constructor(private url: string) {}
 
-    fetchProducts(): Observable<Product[]> {
+    getAllProducts(): Observable<Product[]> {
         let intervalId: any;
     return new Observable((subscriber) => {
         cache.reset();

@@ -6,9 +6,8 @@ import Confirmation from './Confirmation';
 import ProductDetailsTable from './ProductDetailsTable';
 import SnackbarAlert from './SnackbarAlert';
 import Product from '../../model/Product';
-import { useDispatch } from 'react-redux';
 import { productService } from '../../config/service-config';
-import { productActions } from '../../redux/slices/productSlice';
+
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -38,7 +37,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
         price: number | null;
     }>({ product: null, price: null });
 
-    const dispatch = useDispatch();
+    
 
     const handleView = (params: GridRowParams) => {
         const product = products.find((product: Product) => product.id === params.id);
@@ -72,8 +71,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
         ) {
             try {
                 const updatedProduct = { ...editProductModal.product, price: editProductModal.price };
-                await productService.editProduct(editProductModal.product.id, updatedProduct);
-                dispatch(productActions.updateProduct(updatedProduct));
+                await productService.editProduct(editProductModal.product.id, updatedProduct);                
                 setSnackbar({ key: snackbar.key + 1, message: 'Product updated successfully!' });
             } catch (error) {
                 setSnackbar({ key: snackbar.key + 1, message: 'Failed to update product!' });
@@ -86,7 +84,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
         if (confirmed && productIdToDelete !== null) {
             try {
                 await productService.deleteProduct(productIdToDelete);
-                dispatch(productActions.deleteProduct(productIdToDelete));
+                // dispatch(productActions.deleteProduct(productIdToDelete));
                 setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
             } catch (error) {
                 setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete product!' });

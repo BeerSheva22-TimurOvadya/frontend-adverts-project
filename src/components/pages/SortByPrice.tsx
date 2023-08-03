@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import ProductsTable from '../common/ProductsTable';
 import { Box, TextField, Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { productActions } from '../../redux/slices/productSlice';
 import { productService } from '../../config/service-config';
+import Product from '../../model/Product';
 
 const SortByPrice: React.FC = () => {
     const [maxPrice, setMaxPrice] = useState<number | null>(null);
-    const products = useSelector((state: any) => state.products);
-    const dispatch = useDispatch();
+    const [products, setProducts] = useState<Product[]>([]);
 
     const handlePriceChange = (event: any) => {
         const price = event.target.value ? parseFloat(event.target.value) : null;
@@ -18,7 +16,7 @@ const SortByPrice: React.FC = () => {
     const handleApply = async () => {
         if (maxPrice !== null) {
             const filteredProducts = await productService.getProductsByPrice(maxPrice);
-            dispatch(productActions.setProducts(filteredProducts));
+            setProducts(filteredProducts);
         }
     };
 
