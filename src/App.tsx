@@ -6,8 +6,8 @@ import './App.css';
 
 import routesConfig from './config/routes-config.json';
 import NotFound from './components/pages/NotFound';
-import Adverts from './components/pages/Advert';
-import AddAdverts from './components/pages/AddAdvert';
+import Products from './components/pages/Products';
+import AddProducts from './components/pages/AddProducts';
 import Categories from './components/pages/SortByCategories';
 import SortByPrice from './components/pages/SortByPrice';
 
@@ -19,10 +19,10 @@ const App: React.FC = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Navigator routes={always} />}>
-                    <Route index element={<Adverts />} />
-                    <Route path="adverts/add" element={<AddAdverts />} />
-                    <Route path="adverts/categories" element={<Categories />} />
-                    <Route path="adverts/price" element={<SortByPrice />} />                    
+                    <Route index element={<Products />} />
+                    <Route path="products/add" element={<AddProducts />} />
+                    <Route path="products/categories" element={<Categories />} />
+                    <Route path="products/price" element={<SortByPrice />} />                    
                     <Route path="/*" element={<NotFound />} />
                 </Route>
             </Routes>            

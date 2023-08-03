@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import Confirmation from '../common/Confirmation';
 import AddForm from '../forms/AddForm';
 import SnackbarAlert from '../common/SnackbarAlert';
-import Advert from '../../model/Advert';
+import Product from '../../model/Product';
 import { useDispatch } from 'react-redux';
-import { advertActions } from '../../redux/slices/advertSlice';
+import { productActions } from '../../redux/slices/productSlice';
 import AddCarsForm from '../forms/AddCarsForm';
 import AddElectronicsForm from '../forms/AddElectronicsForm';
 import AddHousingForm from '../forms/AddHousingForm';
 import { Box, Modal, Paper } from '@mui/material';
-import { addAdvert } from '../../service/AdvertService';
+import { addProduct } from '../../service/ProductService';
 
-const AddAdvert: React.FC = () => {
+const AddProduct: React.FC = () => {
     const [openConfirm, setOpenConfirm] = useState(false);
-    const [advertToAdd, setAdvertToAdd] = useState<Advert>();
+    const [productToAdd, setProductToAdd] = useState<Product>();
     
 
     const dispatch = useDispatch();
@@ -25,12 +25,12 @@ const AddAdvert: React.FC = () => {
         setOpenConfirm(true);
     };
 
-    const handleAddAdvert = (confirmed: boolean) => {
-        if (confirmed && advertToAdd) {
-          addAdvert(advertToAdd)
-            .then((newAdvert) => {
-              dispatch(advertActions.addAdvert(newAdvert));
-              setSnackbar({ key: snackbar.key + 1, message: 'Advert added successfully!' });
+    const handleAddProduct = (confirmed: boolean) => {
+        if (confirmed && productToAdd) {
+          addProduct(productToAdd)
+            .then((newProduct) => {
+              dispatch(productActions.addProduct(newProduct));
+              setSnackbar({ key: snackbar.key + 1, message: 'Product added successfully!' });
             })
             .catch((error:any) => {              
               console.error(error);
@@ -39,8 +39,8 @@ const AddAdvert: React.FC = () => {
         }
       };
 
-    const handleCategorySelection = (advert: Advert, category: string) => {
-        setAdvertToAdd(advert);
+    const handleCategorySelection = (product: Product, category: string) => {
+        setProductToAdd(product);
         setSelectedCategory(category);
         setOpenModal(true);
     };
@@ -49,46 +49,46 @@ const AddAdvert: React.FC = () => {
     };
 
     const handleAddCar = (car: any) => {
-        if (advertToAdd) {
+        if (productToAdd) {
             const additionalFields = JSON.stringify({
                 brand: car.brand,
                 releaseYear: car.releaseYear,
                 mileage: car.mileage,
                 enginePower: car.enginePower,
             });
-            const newAdvert = { ...advertToAdd, additionalFields, id: Number(advertToAdd.id) };
+            const newProduct = { ...productToAdd, additionalFields, id: Number(productToAdd.id) };
             handleConfirmation();
-            setAdvertToAdd(newAdvert);
+            setProductToAdd(newProduct);
             setOpenModal(false);
         }
     };
 
     const handleAddElectronics = (electronics: any) => {
-        if (advertToAdd) {
+        if (productToAdd) {
             const additionalFields = JSON.stringify({
                 brand: electronics.brand,
                 model: electronics.model,
                 screenSize: electronics.screenSize,
                 type: electronics.type,
             });
-            const newAdvert = { ...advertToAdd, additionalFields, id: Number(advertToAdd.id) };
+            const newProduct = { ...productToAdd, additionalFields, id: Number(productToAdd.id) };
             handleConfirmation();
-            setAdvertToAdd(newAdvert);
+            setProductToAdd(newProduct);
             setOpenModal(false);
         }
     };
 
     const handleAddHousing = (housing: any) => {
-        if (advertToAdd) {
+        if (productToAdd) {
             const additionalFields = JSON.stringify({
                 address: housing.address,
                 rooms: housing.rooms,
                 squareMeters: housing.squareMeters,
                 type: housing.type,
             });
-            const newAdvert = { ...advertToAdd, additionalFields, id: Number(advertToAdd.id) };
+            const newProduct = { ...productToAdd, additionalFields, id: Number(productToAdd.id) };
             handleConfirmation();
-            setAdvertToAdd(newAdvert);
+            setProductToAdd(newProduct);
             setOpenModal(false);
         }
     };
@@ -109,8 +109,8 @@ const AddAdvert: React.FC = () => {
     return (
         <Box>
             <AddForm
-                submitFn={(advert, category) => {
-                    handleCategorySelection(advert, category);
+                submitFn={(product, category) => {
+                    handleCategorySelection(product, category);
                 }}
             />
             <Modal
@@ -132,14 +132,14 @@ const AddAdvert: React.FC = () => {
                 </Paper>
             </Modal>
             <Confirmation
-                confirmFn={handleAddAdvert}
+                confirmFn={handleAddProduct}
                 open={openConfirm}
                 title={'Confirm Addition'}
-                content={'Are you sure you want to add this advert?'}
+                content={'Are you sure you want to add this product?'}
             />
             <SnackbarAlert key={snackbar.key} message={snackbar.message} severity="success" />
         </Box>
     );
 };
 
-export default AddAdvert;
+export default AddProduct;

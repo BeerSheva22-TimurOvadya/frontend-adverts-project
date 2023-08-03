@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import AdvertsTable from '../common/AdvertsTable';
+import ProductsTable from '../common/ProductsTable';
 import { Box, TextField, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { advertActions } from '../../redux/slices/advertSlice';
-import { getAdvertsByPrice } from '../../service/AdvertService';
+import { productActions } from '../../redux/slices/productSlice';
+import { getProductsByPrice } from '../../service/ProductService';
 
 const SortByPrice: React.FC = () => {
     const [maxPrice, setMaxPrice] = useState<number | null>(null);
-    const adverts = useSelector((state: any) => state.adverts);
+    const products = useSelector((state: any) => state.products);
     const dispatch = useDispatch();
 
     const handlePriceChange = (event: any) => {
@@ -17,8 +17,8 @@ const SortByPrice: React.FC = () => {
 
     const handleApply = async () => {
         if (maxPrice !== null) {
-            const filteredAdverts = await getAdvertsByPrice(maxPrice);
-            dispatch(advertActions.setAdverts(filteredAdverts));
+            const filteredProducts = await getProductsByPrice(maxPrice);
+            dispatch(productActions.setProducts(filteredProducts));
         }
     };
 
@@ -42,7 +42,7 @@ const SortByPrice: React.FC = () => {
                 />
                 <Button onClick={handleApply}>Apply</Button>
             </Box>
-            <AdvertsTable adverts={adverts} />
+            <ProductsTable products={products} />
         </Box>
     );
 };

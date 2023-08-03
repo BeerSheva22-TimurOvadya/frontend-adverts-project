@@ -3,12 +3,12 @@ import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x
 import { useState } from 'react';
 import { Visibility, Delete, Edit } from '@mui/icons-material';
 import Confirmation from './Confirmation';
-import AdvertDetailsTable from './AdvertDetailsTable';
+import ProductDetailsTable from './ProductDetailsTable';
 import SnackbarAlert from './SnackbarAlert';
-import Advert from '../../model/Advert';
+import Product from '../../model/Product';
 import { useDispatch } from 'react-redux';
-import { deleteAdvert, editAdvert } from '../../service/AdvertService';
-import { advertActions } from '../../redux/slices/advertSlice';
+import { deleteProduct, editProduct } from '../../service/ProductService';
+import { productActions } from '../../redux/slices/productSlice';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -22,29 +22,29 @@ const style = {
     p: 4,
 };
 
-type AdvertsTableProps = {
-    adverts: Advert[];
+type ProductsTableProps = {
+    products: Product[];
     
 };
 
-const AdvertsTable: React.FC<AdvertsTableProps> = ({ adverts}) => {
-    const [selectedAdvert, setSelectedAdvert] = useState<Advert | null>(null);
+const ProductsTable: React.FC<ProductsTableProps> = ({ products}) => {
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [openModal, setOpenModal] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [advertIdToDelete, setAdvertIdToDelete] = useState<number | null>(null);
+    const [productIdToDelete, setProductIdToDelete] = useState<number | null>(null);
     const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
 
-    const [editAdvertModal, setEditAdvertModal] = useState<{
-        advert: Advert | null;
+    const [editProductModal, setEditProductModal] = useState<{
+        product: Product | null;
         price: number | null;
-    }>({ advert: null, price: null });
+    }>({ product: null, price: null });
 
     const dispatch = useDispatch();
 
     const handleView = (params: GridRowParams) => {
-        const advert = adverts.find((advert: Advert) => advert.id === params.id);
-        if (advert) {
-            setSelectedAdvert(advert);
+        const product = products.find((product: Product) => product.id === params.id);
+        if (product) {
+            setSelectedProduct(product);
             setOpenModal(true);
         }
     };
@@ -54,39 +54,39 @@ const AdvertsTable: React.FC<AdvertsTableProps> = ({ adverts}) => {
     };
 
     const handleDelete = (params: GridRowParams) => {
-        setAdvertIdToDelete(params.id as number);
+        setProductIdToDelete(params.id as number);
         setConfirmDelete(true);
     };
 
     const handleEdit = (params: GridRowParams) => {
-        const advert = adverts.find((advert: Advert) => advert.id === params.id);
-        if (advert) {
-            setEditAdvertModal({ advert, price: advert.price });
+        const product = products.find((product: Product) => product.id === params.id);
+        if (product) {
+            setEditProductModal({ product, price: product.price });
         }
     };
 
     const handleConfirmEdit = async () => {
-      if (editAdvertModal.advert && editAdvertModal.price !== null && editAdvertModal.advert.id !== undefined) {
+      if (editProductModal.product && editProductModal.price !== null && editProductModal.product.id !== undefined) {
         try {
-          const updatedAdvert = { ...editAdvertModal.advert, price: editAdvertModal.price };
-          await editAdvert(editAdvertModal.advert.id, updatedAdvert);
-          dispatch(advertActions.updateAdvert(updatedAdvert));
-          setSnackbar({ key: snackbar.key + 1, message: 'Advert updated successfully!' });
+          const updatedProduct = { ...editProductModal.product, price: editProductModal.price };
+          await editProduct(editProductModal.product.id, updatedProduct);
+          dispatch(productActions.updateProduct(updatedProduct));
+          setSnackbar({ key: snackbar.key + 1, message: 'Product updated successfully!' });
         } catch (error) {
-          setSnackbar({ key: snackbar.key + 1, message: 'Failed to update advert!' });
+          setSnackbar({ key: snackbar.key + 1, message: 'Failed to update product!' });
         }
-        setEditAdvertModal({ advert: null, price: null });
+        setEditProductModal({ product: null, price: null });
       }
     };
 
     const handleConfirmDelete = async (confirmed: boolean) => {
-        if (confirmed && advertIdToDelete !== null) {
+        if (confirmed && productIdToDelete !== null) {
             try {
-                await deleteAdvert(advertIdToDelete);
-                dispatch(advertActions.deleteAdvert(advertIdToDelete));
-                setSnackbar({ key: snackbar.key + 1, message: 'Advert deleted successfully!' });                
+                await deleteProduct(productIdToDelete);
+                dispatch(productActions.deleteProduct(productIdToDelete));
+                setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });                
             } catch (error) {
-                setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete advert!' });
+                setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete product!' });
             }
         }
         setConfirmDelete(false);
@@ -134,7 +134,7 @@ const AdvertsTable: React.FC<AdvertsTableProps> = ({ adverts}) => {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
             <Box sx={{ height: '80vh', width: '95vw' }}>
-                <DataGrid columns={columnsCommon} rows={adverts} />
+                <DataGrid columns={columnsCommon} rows={products} />
             </Box>
 
             <Modal
@@ -144,26 +144,26 @@ const AdvertsTable: React.FC<AdvertsTableProps> = ({ adverts}) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {selectedAdvert && <AdvertDetailsTable advert={selectedAdvert} />}
+                    {selectedProduct && <ProductDetailsTable product={selectedProduct} />}
                 </Box>
             </Modal>
 
             <Modal
-                open={editAdvertModal.advert !== null}
-                onClose={() => setEditAdvertModal({ advert: null, price: null })}
-                aria-labelledby="edit-advert-modal-title"
-                aria-describedby="edit-advert-modal-description"
+                open={editProductModal.product !== null}
+                onClose={() => setEditProductModal({ product: null, price: null })}
+                aria-labelledby="edit-product-modal-title"
+                aria-describedby="edit-product-modal-description"
             >
                 <Box sx={style}>
-                    {editAdvertModal.advert && (
+                    {editProductModal.product && (
                         <div>
-                            <h2>Edit Price for {editAdvertModal.advert.name}</h2>
+                            <h2>Edit Price for {editProductModal.product.name}</h2>
                             <input
                                 type="number"
-                                value={editAdvertModal.price || ''}
+                                value={editProductModal.price || ''}
                                 onChange={(e) =>
-                                    setEditAdvertModal({
-                                        ...editAdvertModal,
+                                    setEditProductModal({
+                                        ...editProductModal,
                                         price: parseFloat(e.target.value),
                                     })
                                 }
@@ -178,11 +178,11 @@ const AdvertsTable: React.FC<AdvertsTableProps> = ({ adverts}) => {
                 confirmFn={handleConfirmDelete}
                 open={confirmDelete}
                 title={'Confirm Deletion'}
-                content={'Are you sure you want to delete this advert?'}
+                content={'Are you sure you want to delete this product?'}
             />
             <SnackbarAlert key={snackbar.key} message={snackbar.message} severity="success" />
         </Box>
     );
 };
 
-export default AdvertsTable;
+export default ProductsTable;

@@ -1,19 +1,19 @@
 import { DataGrid } from '@mui/x-data-grid';
-import Advert from '../../model/Advert';
+import Product from '../../model/Product';
 
-interface AdvertDetailsTableProps {
-    advert: Advert;
+interface ProductDetailsTableProps {
+    product: Product;
 }
 
-const AdvertDetailsTable: React.FC<AdvertDetailsTableProps> = ({ advert }) => {
-    if (!advert) return null;
+const ProductDetailsTable: React.FC<ProductDetailsTableProps> = ({ product }) => {
+    if (!product) return null;
 
-    const additionalFields = JSON.parse(advert.additionalFields);
+    const additionalFields = JSON.parse(product.additionalFields);
 
     let columns = [];
     let rows = [];
 
-    switch (advert.category) {
+    switch (product.category) {
         case 'Cars':
             columns = [
                 { field: 'brand', headerName: 'Brand', width: 130},
@@ -52,4 +52,4 @@ const AdvertDetailsTable: React.FC<AdvertDetailsTableProps> = ({ advert }) => {
     );
 };
 
-export default AdvertDetailsTable;
+export default ProductDetailsTable;

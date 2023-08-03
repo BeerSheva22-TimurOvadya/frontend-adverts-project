@@ -1,9 +1,9 @@
 {
     "always": [
-        { "to": "/", "label": "All Adverts" },        
-        { "to": "/adverts/categories", "label": "Categories" },
-        { "to": "/adverts/price", "label": "Price" }, 
-        { "to": "/adverts/add", "label": "Add Adverts" }
+        { "to": "/", "label": "All Products" },        
+        { "to": "/products/categories", "label": "Categories" },
+        { "to": "/products/price", "label": "Price" }, 
+        { "to": "/products/add", "label": "Add Products" }
         
     ]    
 }
