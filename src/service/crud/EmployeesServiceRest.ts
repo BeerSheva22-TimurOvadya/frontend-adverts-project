@@ -2,6 +2,7 @@ import { Observable, Subscriber } from 'rxjs';
 import Employee from '../../model/Employee';
 import EmployeesService from './EmployeesService';
 const POLLER_INTERVAL = 3000;
+
 class Cache {
     cacheString: string = '';
     set(employees: Employee[]): void {
@@ -20,6 +21,7 @@ class Cache {
         return this.cacheString.length === 0;
     }
 }
+
 function getResponseText(response: Response): string {
     let res = '';
     if (!response.ok) {
@@ -62,9 +64,11 @@ async function fetchAllEmployees(url: string): Promise<Employee[] | string> {
 }
 
 export default class EmployeesServiceRest implements EmployeesService {
+
     private observable: Observable<Employee[] | string> | null = null;
     private cache: Cache = new Cache();
     constructor(private url: string) {}
+    
     async updateEmployee(empl: Employee): Promise<Employee> {
         const response = await fetchRequest(this.getUrlWithId(empl.id!), { method: 'PUT' }, empl);
 

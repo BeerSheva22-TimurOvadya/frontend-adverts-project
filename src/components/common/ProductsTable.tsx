@@ -7,7 +7,7 @@ import ProductDetailsTable from './ProductDetailsTable';
 import SnackbarAlert from './SnackbarAlert';
 import Product from '../../model/Product';
 import { useDispatch } from 'react-redux';
-import { deleteProduct, editProduct } from '../../service/ProductService';
+import { productService } from '../../config/service-config';
 import { productActions } from '../../redux/slices/productSlice';
 
 const style = {
@@ -24,10 +24,9 @@ const style = {
 
 type ProductsTableProps = {
     products: Product[];
-    
 };
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ products}) => {
+const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [openModal, setOpenModal] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
@@ -66,25 +65,29 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products}) => {
     };
 
     const handleConfirmEdit = async () => {
-      if (editProductModal.product && editProductModal.price !== null && editProductModal.product.id !== undefined) {
-        try {
-          const updatedProduct = { ...editProductModal.product, price: editProductModal.price };
-          await editProduct(editProductModal.product.id, updatedProduct);
-          dispatch(productActions.updateProduct(updatedProduct));
-          setSnackbar({ key: snackbar.key + 1, message: 'Product updated successfully!' });
-        } catch (error) {
-          setSnackbar({ key: snackbar.key + 1, message: 'Failed to update product!' });
+        if (
+            editProductModal.product &&
+            editProductModal.price !== null &&
+            editProductModal.product.id !== undefined
+        ) {
+            try {
+                const updatedProduct = { ...editProductModal.product, price: editProductModal.price };
+                await productService.editProduct(editProductModal.product.id, updatedProduct);
+                dispatch(productActions.updateProduct(updatedProduct));
+                setSnackbar({ key: snackbar.key + 1, message: 'Product updated successfully!' });
+            } catch (error) {
+                setSnackbar({ key: snackbar.key + 1, message: 'Failed to update product!' });
+            }
+            setEditProductModal({ product: null, price: null });
         }
-        setEditProductModal({ product: null, price: null });
-      }
     };
 
     const handleConfirmDelete = async (confirmed: boolean) => {
         if (confirmed && productIdToDelete !== null) {
             try {
-                await deleteProduct(productIdToDelete);
+                await productService.deleteProduct(productIdToDelete);
                 dispatch(productActions.deleteProduct(productIdToDelete));
-                setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });                
+                setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
             } catch (error) {
                 setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete product!' });
             }

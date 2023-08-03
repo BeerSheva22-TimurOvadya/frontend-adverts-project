@@ -1,16 +1,10 @@
 
-import EmployeesService from '../service/crud/EmployeesService';
-import EmployeesServiceRest from '../service/crud/EmployeesServiceRest';
+import ProductService from '../service/ProductService';
+import ProductServiceRest from '../service/ProductServiceRest';
 
 
-// export const authService: AuthService = new AuthServiceJwt('http://localhost:3500/login'); для JSON servera
-
-// export const authService: AuthService = new AuthServiceFake();
-
-
-
-export const employeesService: EmployeesService = new EmployeesServiceRest(
-    'http://localhost:3500/employees',
+export const productService: ProductService = new ProductServiceRest(
+    'http://localhost:8080/products',
 ); 
 
-// export const employeesService: EmployeesService = new EmployeesServiceFire();
+
