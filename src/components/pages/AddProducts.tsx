@@ -33,6 +33,7 @@ const AddProduct: React.FC = () => {
                 });
             setOpenConfirm(false);
         }
+        setOpenConfirm(false);
     };
 
     const handleCategorySelection = (product: Product, category: string) => {

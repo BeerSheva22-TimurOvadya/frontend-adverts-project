@@ -14,13 +14,29 @@ const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
         address: '',
     });
 
+    const [errors, setErrors] = useState({
+        rooms: '',
+        squareMeters: '',
+    });
+
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
+        let error = '';
+
+        if (name === 'rooms' || name === 'squareMeters') {
+            if (parseInt(value) < 0) {
+                error = `${name.replace(/([A-Z])/g, ' $1')} must be 0 or greater`;
+            }
+        }
+
         setHousing({ ...housing, [name]: value });
+        setErrors({ ...errors, [name]: error });
     };
 
     const handleSubmit = () => {
-        submitFn(housing);
+        if (!errors.rooms && !errors.squareMeters) {
+            submitFn(housing);
+        }
     };
 
     return (
@@ -56,6 +72,8 @@ const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
                 onChange={handleInputChange}
                 type="number"
                 style={{ marginBottom: '10px', width: '100%' }}
+                error={!!errors.rooms}
+                helperText={errors.rooms}
             />
             <TextField
                 name="squareMeters"
@@ -64,6 +82,8 @@ const HousingForm: React.FC<HousingFormProps> = ({ submitFn }) => {
                 onChange={handleInputChange}
                 type="number"
                 style={{ marginBottom: '10px', width: '100%' }}
+                error={!!errors.squareMeters}
+                helperText={errors.squareMeters}
             />
             <TextField
                 name="address"

@@ -13,13 +13,31 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
         enginePower: '',
     });
 
+    const [errors, setErrors] = useState({
+        releaseYear: '',
+        mileage: '',
+        enginePower: '',
+    });
+    
+
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
+        let error = '';
+
+        if (name === 'releaseYear' || name === 'mileage' || name === 'enginePower') {
+            if (parseInt(value) < 0) {
+                error = `${name.replace(/([A-Z])/g, ' $1')} must be 0 or greater`;
+            }
+        }
+
         setCar({ ...car, [name]: value });
+        setErrors({ ...errors, [name]: error });
     };
 
     const handleSubmit = () => {
-        submitFn(car);
+        if (!errors.releaseYear && !errors.mileage && !errors.enginePower) {
+            submitFn(car);
+        }
     };
 
     return (
@@ -46,6 +64,8 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
                 onChange={handleInputChange}
                 type="number"
                 style={{ marginBottom: '10px', width: '100%' }}
+                error={!!errors.releaseYear}
+                helperText={errors.releaseYear}
             />
             <TextField
                 name="mileage"
@@ -54,6 +74,8 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
                 onChange={handleInputChange}
                 type="number"
                 style={{ marginBottom: '10px', width: '100%' }}
+                error={!!errors.mileage}
+                helperText={errors.mileage}
             />
             <TextField
                 name="enginePower"
@@ -62,6 +84,8 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
                 onChange={handleInputChange}
                 type="number"
                 style={{ marginBottom: '10px', width: '100%' }}
+                error={!!errors.enginePower}
+                helperText={errors.enginePower}
             />
             <Button variant="contained" color="primary" onClick={handleSubmit}>
                 Submit

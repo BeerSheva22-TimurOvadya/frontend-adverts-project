@@ -10,22 +10,27 @@ interface AddFormProps {
 
 const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
     const [error, setError] = useState('');
-    const [product, setProduct] = useState(productUpdated || { name: '', category: '', price: 0 });
+    const [product, setProduct] = useState(productUpdated || { name: '', category: '', price: null });
 
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
+        if (name === "price" && value < 0) {
+            setError('Price must be 0 or greater');
+            return;
+        }
+        setError('');
         setProduct({ ...product, [name]: value });
     };
 
     const handleSubmit = () => {
-        if (!product.name || !product.category || !product.price) {
+        if (!product.name || !product.category || !product.price ) {
             setError('Please fill in all fields');
             return;
         }
 
         setError('');
         submitFn(product, product.category);
-        setProduct({ name: '', category: '', price: 0 });
+        setProduct({ name: '', category: '', price: null });
     };
 
     return (
@@ -69,7 +74,7 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
                 <TextField
                     name="price"
                     label="Price"
-                    value={product.price}
+                    value={product.price || ''}
                     onChange={handleInputChange}
                     type="number"
                 />

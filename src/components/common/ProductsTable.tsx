@@ -31,6 +31,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [productIdToDelete, setProductIdToDelete] = useState<number | null>(null);
     const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
+    const [priceError, setPriceError] = useState<string | null>(null);
     
 
     const [editProductModal, setEditProductModal] = useState<{
@@ -69,7 +70,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     const handleConfirmEdit = async () => {
         if (
             editProductModal.product &&
-            editProductModal.price !== null &&
+            editProductModal.price !== null &&            
             editProductModal.product.id !== undefined
         ) {
             try {
@@ -84,13 +85,13 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     };
 
     const handleConfirmDelete = async (confirmed: boolean) => {
-        if (confirmed && productIdToDelete !== null) {
+        if (confirmed && productIdToDelete !== null) {            
             try {
                 await productService.deleteProduct(productIdToDelete);                
-                setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
+                setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });                
             } catch (error) {
                 setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete product!' });
-            }
+            }                    
         }
         setConfirmDelete(false);
     };
@@ -171,13 +172,20 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
                           type="number"
                           fullWidth
                           value={editProductModal.price || ''}
-                          onChange={(e) =>
-                              setEditProductModal({
-                                  ...editProductModal,
-                                  price: parseFloat(e.target.value),
-                              })
-                          }
+                          onChange={(e) => {
+                            const priceValue = parseFloat(e.target.value);
+                            if (priceValue < 0) {
+                                setPriceError('Price must be 0 or greater');
+                            } else {
+                                setPriceError(null);
+                            }
+                            setEditProductModal({
+                                ...editProductModal,
+                                price: priceValue,
+                            });
+                        }}
                       />
+                      {priceError && <div style={{ color: 'red' }}>{priceError}</div>}
                   </DialogContent>
                   <DialogActions>
                       <Button onClick={() => setEditProductModal({ product: null, price: null })} color="primary">
