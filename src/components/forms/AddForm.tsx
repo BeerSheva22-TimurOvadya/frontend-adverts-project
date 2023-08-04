@@ -32,7 +32,7 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
         <form
             style={{
                 display: 'flex',
-                flexDirection: 'column', // Сначала располагаем элементы по вертикали
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 position: 'absolute',
@@ -43,10 +43,10 @@ const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
             <div
                 style={{
                     display: 'flex',
-                    flexDirection: 'row', // Здесь располагаем элементы по горизонтали
+                    flexDirection: 'row', 
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: '20px', // Добавляем нижний отступ для пространства между полями и кнопкой
+                    marginBottom: '20px', 
                 }}
             >
                 <TextField name="name" label="Name" value={product.name} onChange={handleInputChange} />

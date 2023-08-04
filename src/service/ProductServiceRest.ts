@@ -2,7 +2,7 @@ import { Observable, Subscriber } from 'rxjs';
 import Product from '../model/Product';
 import ProductService from './ProductService';
 
-const POLLER_INTERVAL = 5000;
+const POLLER_INTERVAL = 3000;
 
 class Cache {
     cacheString: string = '';

@@ -86,8 +86,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
     const handleConfirmDelete = async (confirmed: boolean) => {
         if (confirmed && productIdToDelete !== null) {
             try {
-                await productService.deleteProduct(productIdToDelete);
-                // dispatch(productActions.deleteProduct(productIdToDelete));
+                await productService.deleteProduct(productIdToDelete);                
                 setSnackbar({ key: snackbar.key + 1, message: 'Product deleted successfully!' });
             } catch (error) {
                 setSnackbar({ key: snackbar.key + 1, message: 'Failed to delete product!' });
