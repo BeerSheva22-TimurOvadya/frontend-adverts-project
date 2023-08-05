@@ -7,6 +7,7 @@ import ProductDetailsTable from './ProductDetailsTable';
 import SnackbarAlert from './SnackbarAlert';
 import Product from '../../model/Product';
 import { productService } from '../../config/service-config';
+import { currency } from '../../model/currency';
 
 
 const style = {
@@ -107,6 +108,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
             flex: 0.6,
             align: 'center',
             headerAlign: 'center',
+            renderCell: (params) => `${currency}${params.value}`
         },
         {
             field: 'tools',

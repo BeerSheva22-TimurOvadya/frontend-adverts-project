@@ -5,12 +5,12 @@ import { Categories } from '../../model/AllCategories';
 
 interface AddFormProps {
     submitFn: (product: Product, category: string) => void;
-    productUpdated?: Product;
+    
 }
 
-const AddForm: React.FC<AddFormProps> = ({ submitFn, productUpdated }) => {
+const AddForm: React.FC<AddFormProps> = ({ submitFn }) => {
     const [error, setError] = useState('');
-    const [product, setProduct] = useState(productUpdated || { name: '', category: '', price: null });
+    const [product, setProduct] = useState( { name: '', category: '', price: null });
 
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
