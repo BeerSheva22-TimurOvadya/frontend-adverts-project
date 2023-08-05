@@ -1,10 +1,4 @@
+import AdvertService from '../service/AdvertService';
+import AdvertServiceRest from '../service/AdvertServiceRest';
 
-import ProductService from '../service/ProductService';
-import ProductServiceRest from '../service/ProductServiceRest';
-
-
-export const productService: ProductService = new ProductServiceRest(
-    'http://localhost:8080/products',
-); 
-
-
+export const advertService: AdvertService = new AdvertServiceRest('http://localhost:8080/adverts');

@@ -4,6 +4,6 @@ import { codeReducer} from './slices/codeSlice';
 
 export const store = configureStore({
     reducer: { 
-        products: codeReducer,        
+        adverts: codeReducer,        
     },
 });

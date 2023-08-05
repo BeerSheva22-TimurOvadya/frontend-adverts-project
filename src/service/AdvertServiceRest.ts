@@ -1,21 +1,21 @@
 import { Observable, Subscriber } from 'rxjs';
-import Product from '../model/Product';
-import ProductService from './ProductService';
+import Advert from '../model/Advert';
+import AdvertService from './AdvertService';
 
 const POLLER_INTERVAL = 3000;
 
 class Cache {
     cacheString: string = '';
-    set(products: Product[]): void {
-        this.cacheString = JSON.stringify(products);
+    set(adverts: Advert[]): void {
+        this.cacheString = JSON.stringify(adverts);
     }
     reset() {
         this.cacheString = '';
     }
-    isEqual(products: Product[]): boolean {
-        return this.cacheString === JSON.stringify(products);
+    isEqual(adverts: Advert[]): boolean {
+        return this.cacheString === JSON.stringify(adverts);
     }
-    getCache(): Product[] {
+    getCache(): Advert[] {
         return !this.isEmpty() ? JSON.parse(this.cacheString) : [];
     }
     isEmpty(): boolean {
@@ -33,19 +33,19 @@ async function fetchRequestJson(url: string, options: RequestInit = {}): Promise
     return await response.json();
 }
 
-export default class ProductServiceRest implements ProductService {
+export default class AdvertServiceRest implements AdvertService {
     constructor(private url: string) {}
 
-    getAllProducts(): Observable<Product[]> {
+    getAllAdverts(): Observable<Advert[]> {
         return new Observable((subscriber) => {
             let intervalId: any;
             cache.reset();
-            const subscriberNext = (url: string, subscriber: Subscriber<Product[]>) => {
+            const subscriberNext = (url: string, subscriber: Subscriber<Advert[]>) => {
                 fetchRequestJson(url)
-                    .then((products) => {
-                        if (cache.isEmpty() || !cache.isEqual(products)) {
-                            cache.set(products);
-                            subscriber.next(products);
+                    .then((adverts) => {
+                        if (cache.isEmpty() || !cache.isEqual(adverts)) {
+                            cache.set(adverts);
+                            subscriber.next(adverts);
                         }
                     })
                     .catch((error) => subscriber.error(error));
@@ -56,35 +56,35 @@ export default class ProductServiceRest implements ProductService {
         });
     }
 
-    async addProduct(product: Product): Promise<Product> {
+    async addAdvert(advert: Advert): Promise<Advert> {
         return fetchRequestJson(this.url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(product),
+            body: JSON.stringify(advert),
         });
     }
 
-    async deleteProduct(productId: number): Promise<void> {
-        await fetchRequestJson(`${this.url}/${productId}`, { method: 'DELETE' });
+    async deleteAdvert(advertId: number): Promise<void> {
+        await fetchRequestJson(`${this.url}/${advertId}`, { method: 'DELETE' });
     }
 
-    async getProductsByCategory(category: string): Promise<Product[]> {
+    async getAdvertsByCategory(category: string): Promise<Advert[]> {
         return fetchRequestJson(`${this.url}/category/${category}`);
     }
 
-    async getProductsByPrice(maxPrice: number): Promise<Product[]> {
+    async getAdvertsByPrice(maxPrice: number): Promise<Advert[]> {
         return fetchRequestJson(`${this.url}/price?maxPrice=${maxPrice}`);
     }
 
-    async editProduct(productId: number, product: Product): Promise<Product> {
-        return fetchRequestJson(`${this.url}/${productId}`, {
+    async editAdvert(advertId: number, advert: Advert): Promise<Advert> {
+        return fetchRequestJson(`${this.url}/${advertId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(product),
+            body: JSON.stringify(advert),
         });
     }
 }

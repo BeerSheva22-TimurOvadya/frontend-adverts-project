@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import ProductsTable from '../common/ProductsTable';
+import AdvertsTable from '../common/AdvertsTable';
 import { Box, TextField, Button, Grid } from '@mui/material';
-import { productService } from '../../config/service-config';
-import Product from '../../model/Product';
+import { advertService } from '../../config/service-config';
+import Advert from '../../model/Advert';
 
 const SortByPrice: React.FC = () => {
     const [maxPrice, setMaxPrice] = useState<number | null>(null);
-    const [products, setProducts] = useState<Product[]>([]);
+    const [adverts, setAdverts] = useState<Advert[]>([]);
     const [errors, setErrors] = useState({
         maxPrice: '',
     });
@@ -25,8 +25,8 @@ const SortByPrice: React.FC = () => {
 
     const handleApply = async () => {
         if (maxPrice !== null && !errors.maxPrice) {
-            const filteredProducts = await productService.getProductsByPrice(maxPrice);
-            setProducts(filteredProducts);
+            const filteredAdverts = await advertService.getAdvertsByPrice(maxPrice);
+            setAdverts(filteredAdverts);
         }
     };
 
@@ -69,7 +69,7 @@ const SortByPrice: React.FC = () => {
                     </Grid>
                 </Grid>
             </Box>
-            <ProductsTable products={products} />
+            <AdvertsTable adverts={adverts} />
         </Box>
     );
 };

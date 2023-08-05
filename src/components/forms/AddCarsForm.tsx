@@ -18,7 +18,6 @@ const CarsForm: React.FC<CarsFormProps> = ({ submitFn }) => {
         mileage: '',
         enginePower: '',
     });
-    
 
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;

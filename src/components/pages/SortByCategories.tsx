@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Select, MenuItem } from '@mui/material';
-import ProductsTable from '../common/ProductsTable';
-import { productService } from '../../config/service-config';
-import Product from '../../model/Product';
+import AdvertsTable from '../common/AdvertsTable';
+import { advertService } from '../../config/service-config';
+import Advert from '../../model/Advert';
 
 const SortByCategories: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [adverts, setAdverts] = useState<Advert[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>('Cars');
 
     const handleCategoryChange = (event: any) => {
@@ -13,9 +13,10 @@ const SortByCategories: React.FC = () => {
     };
 
     useEffect(() => {
-        productService.getProductsByCategory(selectedCategory)
-            .then((products: Product[]) => {
-                setProducts(products);
+        advertService
+            .getAdvertsByCategory(selectedCategory)
+            .then((adverts: Advert[]) => {
+                setAdverts(adverts);
             })
             .catch((error) => {
                 console.error(error);
@@ -31,7 +32,7 @@ const SortByCategories: React.FC = () => {
                     <MenuItem value="Housing">Housing</MenuItem>
                 </Select>
             </Box>
-            <ProductsTable products={products} />
+            <AdvertsTable adverts={adverts} />
         </Box>
     );
 };
