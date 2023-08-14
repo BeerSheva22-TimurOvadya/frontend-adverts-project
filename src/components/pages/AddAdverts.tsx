@@ -12,7 +12,6 @@ import { advertService } from '../../config/service-config';
 const AddAdvert: React.FC = () => {
     const [openConfirm, setOpenConfirm] = useState(false);
     const [advertToAdd, setAdvertToAdd] = useState<Advert>();
-
     const [snackbar, setSnackbar] = useState<{ key: number; message: string }>({ key: 0, message: '' });
     const [openModal, setOpenModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');

@@ -7,9 +7,7 @@ interface AdvertDetailsTableProps {
 
 const AdvertDetailsTable: React.FC<AdvertDetailsTableProps> = ({ advert }) => {
     if (!advert) return null;
-
     const additionalFields = JSON.parse(advert.additionalFields);
-
     let columns = [];
     let rows = [];
 

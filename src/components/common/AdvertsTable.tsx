@@ -143,7 +143,7 @@ const AdvertsTable: React.FC<AdvertsTableProps> = ({ adverts }) => {
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
-            <Box sx={{ height: '80vh', width: '95vw' }}>
+            <Box sx={{ height: '75vh', width: '95vw' }}>
                 <DataGrid columns={columnsCommon} rows={adverts} />
             </Box>
 
